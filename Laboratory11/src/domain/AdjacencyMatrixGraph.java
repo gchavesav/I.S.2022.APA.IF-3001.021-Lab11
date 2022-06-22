@@ -45,17 +45,20 @@ public class AdjacencyMatrixGraph implements Graph {
     
     @Override
     public int size() throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return counter;
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.counter = 0;
+        this.vertexList = new Vertex[n];
+        this.adjacencyMatrix = new Object[n][n];
+        initMatrix();
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return counter==0;
     }
 
     @Override
@@ -70,12 +73,26 @@ public class AdjacencyMatrixGraph implements Graph {
 
     @Override
     public void addVertex(Object element) throws GraphException, ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(counter>=vertexList.length)
+            throw new GraphException("Adjacency Matrix Graph is Full");
+        vertexList[counter++] = new Vertex(element);
     }
 
     @Override
     public void addEdge(Object a, Object b) throws GraphException, ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(!containsVertex(a)||!containsVertex(b))
+            throw new GraphException("Cannot add edge between vertexes ["+a+"] and ["+b+"]");
+        adjacencyMatrix[indexOf(a)][indexOf(b)] = 1;
+        adjacencyMatrix[indexOf(b)][indexOf(a)] = 1; //grafo no dirigido
+    }
+    
+    private int indexOf(Object element){
+        for (int i = 0; i < counter; i++) {
+            if(util.Utility.equals(vertexList[i].data, element)){
+                return i; //necesito que retorne la posicion del objeto en la lista de vertices
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -94,9 +111,31 @@ public class AdjacencyMatrixGraph implements Graph {
     }
 
     @Override
-    public Object getVertexByIndex(int index) {
+    public Vertex getVertexByIndex(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public String toString() {
+        String result = "ADJACENCY MATRIX GRAPH CONTENT...";
+        //vertexes info
+        for (int i = 0; i < counter; i++) {
+            result+="\nThe vertex in the position ["+i+"] is: "+vertexList[i].data;
+        }
+        //edges info
+        for (int i = 0; i < counter; i++){
+            for (int j = 0; j < counter; j++) {
+                if(!adjacencyMatrix[i][j].equals(0)){ //si existe arista
+                    result+="\nThere is edge between vertexes: "+vertexList[i].data
+                            +"...."+vertexList[j].data;
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    
     
     
     

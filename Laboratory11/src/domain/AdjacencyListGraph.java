@@ -84,7 +84,7 @@ public class AdjacencyListGraph implements Graph {
     }
 
     @Override
-    public Object getVertexByIndex(int index) {
+    public Vertex getVertexByIndex(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
@@ -160,13 +160,13 @@ public class AdjacencyListGraph implements Graph {
     
     private int adjacentVertexNotVisited(int index) throws ListException {
         Object vertexData = vertexList[index].data;
-        for(int i=0; i<count; i++)
-	    if(!vertexList[i].edgesList.isEmpty()
-              &&vertexList[i].edgesList
-                .contains(new EdgeWeight(vertexData, null)) 
-                && !vertexList[i].isVisited())
-	             return i;
-	     return -1;
+        //for(int i=0; i<count; i++)
+//	    if(!vertexList[i].edgesList.isEmpty()
+//              &&vertexList[i].edgesList
+//                .contains(new EdgeWeight(vertexData, null)) 
+//                && !vertexList[i].isVisited())
+//	             return i;
+	return -1;
     }
     
 }
